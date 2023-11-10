@@ -5,12 +5,16 @@ def main(): Unit = {
   println("\nZadanie 1:")
   println(distance((1, 2), (3, 4)))
   println("\nZadanie 2:")
-  println(getYoungerV1(("Jan", "Kowalski", 20, true, 42), ("Anna", "Nowak", 19, false, 38)))
+  println(getYoungerV1(("Jan", "Maciuk", 20, true, 42), ("Anna", "Szybka", 19, false, 38)))
   println("\nZadanie 3:")
   println(weekDayToString(WeekDay.Monday))
   println(weekDayToString(nextDay(WeekDay.Monday)))
   println("\nZadanie 4:")
-  println(safeHead(List(1,2,3,4,5)))
+  println(safeHead(List(5,4,3,2,1)))
+  println(safeHead(List()))
+  println("\nZadanie 5:")
+  println(Volume(Figure.Cuboid(2,2,2)))
+  println(Volume(Figure.Sphere(5)))
 }
 
 
@@ -83,6 +87,25 @@ private def safeHead[A](list: List[A]): Maybe = {
     }
   }
 
+
+//Zadanie 5:
+type SolidFigure = Figure
+enum Figure:
+  case Cuboid(length:Int,width:Int,height:Int)
+  case Cone(radius:Int,height:Int)
+  case Sphere(radius:Int)
+  case Cylinder(radius:Int,height:Int)
+  case Line(length:Int)
+
+private def Volume(figure: SolidFigure): Maybe = {
+  figure match {
+    case Figure.Cuboid(length, width, height) => Maybe.Just(length * width * height)
+    case Figure.Cone(radius, height) =>          Maybe.Just(Math.PI * Math.pow(radius, 2) * height / 3)
+    case Figure.Sphere(radius) =>                Maybe.Just(4 * Math.PI * Math.pow(radius, 3) / 3)
+    case Figure.Cylinder(radius, height) =>      Maybe.Just(Math.PI * Math.pow(radius, 2) * height)
+    case Figure.Line(length) =>                  Maybe.Nothing // a line has no volume
+  }
+}
 
 
 
